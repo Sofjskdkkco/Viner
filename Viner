@@ -69,7 +69,7 @@ Viner.BorderColor3 = Color3.fromRGB(0, 0, 0)
 Viner.BorderSizePixel = 0
 Viner.Draggable = true
 Viner.ClipsDescendants = true
-Viner.Position = UDim2.new(0.129829988, 0, 0.251879692, 0)
+Viner.Position = UDim2.new(0.1, 0, 0.01, 0)
 Viner.Size = UDim2.new(0, 478, 0, 263)
 
 UICorner.Parent = Viner
