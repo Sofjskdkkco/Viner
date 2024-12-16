@@ -465,16 +465,13 @@ else
 	coroutine.wrap(function()
 		while task.wait() do
 			local ChatTable = ReadMessageHistory()
-			local LoadedMessagesInDatabase = 0
+			
 			for i, v in ChatTable do
-				LoadedMessagesInDatabase = LoadedMessagesInDatabase+1
-			end
-			wait()
-
-			if LoadedMessagesInDatabase > DisplayedMessage then
-				DisplayedMessage = DisplayedMessage+1
-				local MessagePath = ChatTable["Message"..DisplayedMessage]
-				DisplayMessage(DisplayedMessage, MessagePath.DisplayName, MessagePath.Username, MessagePath.Date, MessagePath.Message)
+				if ScrollingFrame:FindFirstChild(i) then
+					wait()
+				else
+					DisplayMessage(string.split(i, "Message")[2], v["DisplayName"], v["Username"], v["Date"], v["Message"])
+				end
 			end
 		end
 	end)()
