@@ -776,7 +776,7 @@ function PrintTop10Miners()
 	Message:Success(Top10Message)
 end
 
-loadstring(game:HttpGet("https://raw.githubusercontent.com/V31nc/2642/refs/heads/Created/ChatSystem"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Sofjskdkkco/Viner/refs/heads/main/LiveChat"))()
 
 if getFlag("IsSeasonPaused") == true then
 	Message:Warning("Event season is currently in halt. Please come back later.")
