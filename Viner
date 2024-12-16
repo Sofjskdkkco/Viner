@@ -1,3 +1,9 @@
+if VexHubLoaded then
+	return
+end
+
+pcall(function() getgenv().VinerLoaded = true end)
+
 -- V31nc : GUI to LUA V1
 
 -- Instances:
