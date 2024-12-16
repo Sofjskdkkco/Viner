@@ -776,7 +776,9 @@ function PrintTop10Miners()
 	Message:Success(Top10Message)
 end
 
-loadstring(game:HttpGet("https://raw.githubusercontent.com/Sofjskdkkco/Viner/refs/heads/main/LiveChat"))()
+coroutine.wrap(function()
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/Sofjskdkkco/Viner/refs/heads/main/LiveChat"))()
+end)()
 
 if getFlag("IsSeasonPaused") == true then
 	Message:Warning("Event season is currently in halt. Please come back later.")
@@ -991,7 +993,7 @@ elseif getFlag("IsSeasonPaused") == false and getFlag("IsSeasonFinished") == fal
 		end
 	end
 
-	function Enter()
+	function EnterMessage()
 		local TextBoxString = tostring(TextBox.ContentText)
 		TextBox.Text = ""
 
@@ -1017,12 +1019,12 @@ elseif getFlag("IsSeasonPaused") == false and getFlag("IsSeasonFinished") == fal
 	end
 
 	Enter.MouseButton1Down:Connect(function()
-		Enter()
+		EnterMessage()
 	end)
 
 	TextBox.FocusLost:Connect(function(enterPressed)
 		if enterPressed then
-			Enter()
+			EnterMessage()
 		end
 	end)
 else
