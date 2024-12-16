@@ -993,7 +993,7 @@ elseif getFlag("IsSeasonPaused") == false and getFlag("IsSeasonFinished") == fal
 		end
 	end
 
-	function EnterMessage()
+	function EnterCommand()
 		local TextBoxString = tostring(TextBox.ContentText)
 		TextBox.Text = ""
 
@@ -1019,12 +1019,12 @@ elseif getFlag("IsSeasonPaused") == false and getFlag("IsSeasonFinished") == fal
 	end
 
 	Enter.MouseButton1Down:Connect(function()
-		EnterMessage()
+		EnterCommand()
 	end)
 
 	TextBox.FocusLost:Connect(function(enterPressed)
 		if enterPressed then
-			EnterMessage()
+			EnterCommand()
 		end
 	end)
 else
