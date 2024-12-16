@@ -470,6 +470,7 @@ else
 				if ScrollingFrame:FindFirstChild(i) then
 					wait()
 				else
+					DisplayedMessage = DisplayedMessage+1
 					DisplayMessage(string.split(i, "Message")[2], v["DisplayName"], v["Username"], v["Date"], v["Message"])
 				end
 			end
