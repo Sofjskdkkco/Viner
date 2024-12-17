@@ -527,17 +527,10 @@ else
 					if ScrollingFrame[i].Message.Text ~= v["Message"] then
 						local VerifiedPeople = loadstring(game:HttpGet("https://raw.githubusercontent.com/V31nc/2642/Created/ChatSystemVerifiedHWIDS"))()
 
-						local IsVerified = false
-						for i, _ in VerifiedPeople do
-							if i == v["Username"] then
-								IsVerified = true
-							end
-						end
-
-						if IsVerified == false then
-							ScrollingFrame[i].Message.Text = '<b>'..v["DisplayName"]..'</b> <font size="10">(@'..v["Username"]..') '..v["Date"]..'</font> \n'..v["Message"]
+						if (VerifiedPeople[v["Username"]]) then
+							ScrollingFrame[i].Message.Text = utf8.char("0xE000")..' <b>'..v["DisplayName"]..'</b> <font size="10">(@'..v["Username"]..') '..v["Date"]..' (msg#: '..string.split(i, "Message")..')</font> \n'..v["Message"]
 						else
-							ScrollingFrame[i].Message.Text = utf8.char("0xE000")..' <b>'..v["DisplayName"]..'</b> <font size="10">(@'..v["Username"]..') '..v["Date"]..'</font> \n'..v["Message"]
+							ScrollingFrame[i].Message.Text = '<b>'..v["DisplayName"]..'</b> <font size="10">(@'..v["Username"]..') '..v["Date"]..'</font> \n'..v["Message"]
 						end
 					end
 				end
