@@ -380,7 +380,7 @@ else
 		end
 	end
 	
-	function DeleteMessage(MessageNumber)
+	function EditMessage(MessageNumber, Message)
 		local Secret = "2zxPR0hoOgP7ORnWaaEFPgFmOQ4SWhui4zC4Jbw1"
 		local URL = "https://vexhub-425a7-default-rtdb.firebaseio.com/"
 		local Folder = "LiveChat"
@@ -398,7 +398,7 @@ else
 		end
 
 		if (Table["Message"..MessageNumber]) then
-			Table["Message"..MessageNumber].Message = '<font color="rgb(255,102,102)">[ Content Deleted ]</font>'
+			Table["Message"..MessageNumber].Message = Message
 		end
 
 		local send = request({
@@ -444,8 +444,7 @@ else
 			if Username == "itsyaboivincentt" then
 				if string.split(Message, " ")[1] == "/delete" then
 					local TextContentTable = string.split(Message, " ")
-					DeleteMessage(tonumber(TextContentTable[2]))
-
+					EditMessage(tonumber(TextContentTable[2]), '<font color="rgb(255,102,102)">[ Content Deleted ]</font>')
 					PostMessage(MessageNumber+1, "System", "System", os.date("%x %X%p %Z"), "Message deleted successfully")
 				end
 			end
@@ -510,9 +509,7 @@ else
 			local ChatTable = ReadMessageHistory()
 
 			for i, v in ChatTable do
-				if ScrollingFrame:FindFirstChild(i) then
-					wait()
-				else
+				if ScrollingFrame:FindFirstChild(i) == nil then
 					DisplayedMessage = DisplayedMessage+1
 					DisplayMessage(string.split(i, "Message")[2], v["DisplayName"], v["Username"], v["Date"], v["Message"])
 				end
@@ -525,13 +522,7 @@ else
 			for i, v in ReadMessageHistory() do
 				if ScrollingFrame:FindFirstChild(i) then
 					if ScrollingFrame[i].Message.Text ~= v["Message"] then
-						local VerifiedPeople = loadstring(game:HttpGet("https://raw.githubusercontent.com/V31nc/2642/Created/ChatSystemVerifiedHWIDS"))()
-
-						if (VerifiedPeople[v["Username"]]) then
-							ScrollingFrame[i].Message.Text = utf8.char("0xE000")..' <b>'..v["DisplayName"]..'</b> <font size="10">(@'..v["Username"]..') '..v["Date"]..' (msg#: '..string.split(i, "Message")[2]..')</font> \n'..v["Message"]
-						else
-							ScrollingFrame[i].Message.Text = '<b>'..v["DisplayName"]..'</b> <font size="10">(@'..v["Username"]..') '..v["Date"]..' (msg#: '..string.split(i, "Message")[2]..')</font> \n'..v["Message"]
-						end
+						EditMessage(string.split(i, "Message")[2], v["Message"])
 					end
 				end
 			end
