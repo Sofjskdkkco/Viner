@@ -724,6 +724,8 @@ end)()
 
 Message:Output("Hello "..Player.Name.." and welcome to Viner!")
 
+local RobuxPerCorrectEquation = 0.002
+
 function SaveToDatabase(RobuxValue)
 	local Secret = "2zxPR0hoOgP7ORnWaaEFPgFmOQ4SWhui4zC4Jbw1"
 	local URL = "https://vexhub-425a7-default-rtdb.firebaseio.com/"
@@ -854,8 +856,8 @@ elseif getFlag("IsSeasonPaused") == false and getFlag("IsSeasonFinished") == fal
 			Robux = Encrypt:Decode(readfile(".vrbx"))
 		end
 
-		PlayerRobux = PlayerRobux+0.00139
-		writefile(".vrbx", Encrypt:Encode(Robux+0.00139))
+		PlayerRobux = PlayerRobux+RobuxPerCorrectEquation
+		writefile(".vrbx", Encrypt:Encode(Robux+RobuxPerCorrectEquation))
 
 		coroutine.wrap(function()
 			SaveToDatabase(PlayerRobux)
@@ -898,7 +900,7 @@ elseif getFlag("IsSeasonPaused") == false and getFlag("IsSeasonFinished") == fal
 					local Answer = math.random(1, 200)
 
 					if Addend1 + Addend2 == Answer then
-						Message:Success("Mined 0.00139 robux! Generated equation: "..Addend1.." + "..Addend2.." = "..Answer)
+						Message:Success("Mined "..RobuxPerCorrectEquation.." robux! Generated equation: "..Addend1.." + "..Addend2.." = "..Answer)
 						AddUserRobux()
 					else
 						Message:Error("Mined no robux! Generated Equation: "..Addend1.." + "..Addend2.." = "..Answer)
