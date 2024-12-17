@@ -934,7 +934,7 @@ elseif getFlag("IsSeasonPaused") == false and getFlag("IsSeasonFinished") == fal
 		end)()
 
 		coroutine.wrap(function()
-			while task.wait(60) do
+			while task.wait(600) do
 				PauseMiningSession()
 				DeleteOutputs()
 				Message:Warning("Checking if key and season is valid...")
