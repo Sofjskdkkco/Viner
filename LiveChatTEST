@@ -466,7 +466,7 @@ else
 				DisplaySystemMessage("@"..Username.."\n\nFailed to edit message: You dont have admin privileges or you didnt create this message")
 			end
 		elseif TextContentTable[1] == "/cmds" then
-			PostMessage(MessageNumber+1, "System", "System", os.date("%x %X%p %Z"), '@'..Username..'\n\n<b>COMMANDS:</b>\n/delete [MESSAGENUMBER]')
+			PostMessage(MessageNumber+1, "System", "System", os.date("%x %X%p %Z"), '@'..Username..'\n\n<b>COMMANDS:</b>\n/delete [MESSAGENUMBER]\n/edit [MESSAGENUMBER] [MESSAGE]')
 		end
 
 		if PostMessageToDatabase == true then
