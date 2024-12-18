@@ -434,7 +434,7 @@ else
 				local EditedMessage = ""
 
 				for i, v in ipairs(TextContentTable) do
-					if i ~= 1 or i ~= 2 then
+					if tonumber(i) ~= 1 or tonumber(i) ~= 2 then
 						EditedMessage = EditedMessage.." "..v
 					end
 				end
