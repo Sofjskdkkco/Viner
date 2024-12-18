@@ -432,16 +432,24 @@ else
 
 			if Username == "itsyaboivincentt" or ReadMessageHistory()["Message"..tonumber(TextContentTable[2])].Username == Username then
 				local EditedMessage = ""
+				local AtStart = true
 
 				for i, v in ipairs(TextContentTable) do
-					if tonumber(i) ~= 1 or tonumber(i) ~= 2 then
-						EditedMessage = EditedMessage.." "..v
+					if i == 1 or i ~= 2 then
+						EditedMessage = EditedMessage
+					else
+						if AtStart == true then
+							AtStart = false
+							EditedMessage = v
+						else
+							EditedMessage = EditedMessage.." "..v
+						end
 					end
 				end
 				wait()
 
 				EditMessage(tonumber(TextContentTable[2]), EditedMessage)
-				DisplaySystemMessage("@"..Username.."\n\nMessage deleted successfully!")
+				DisplaySystemMessage("@"..Username.."\n\nMessage edited successfully!")
 			else
 				DisplaySystemMessage("@"..Username.."\n\nFailed to edit message: You dont have admin privileges or you didnt create this message")
 			end
