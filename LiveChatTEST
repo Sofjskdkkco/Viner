@@ -401,7 +401,9 @@ else
 		end
 
 		if (Table["Message"..MessageNumber]) then
-			Table["Message"..MessageNumber].Message = Message
+			if Table["Message"..MessageNumber].Message ~= '<font color="rgb(255,102,102)">[ Content Deleted ]</font>' then
+				Table["Message"..MessageNumber].Message = Message
+			end
 		end
 
 		local send = request({
@@ -426,30 +428,40 @@ else
 			else
 				DisplaySystemMessage("@"..Username.."\n\nFailed to delete message: You dont have admin privileges or you didnt create this message")
 			end
+
 		elseif TextContentTable[1] == "/edit" then
+			local MessageNumber = TextContentTable[2]
 			PostMessageToDatabase = false
 			ScrollingFrame:FindFirstChild("Temporary"..MessageNumber):Destroy()
 
-			if Username == "itsyaboivincentt" or ReadMessageHistory()["Message"..tonumber(TextContentTable[2])].Username == Username then
-				local EditedMessage = ""
-				local AtStart = true
+			if Username == "itsyaboivincentt" or ReadMessageHistory()["Message"..tonumber(TextContentTable[2])].Username == Username then				
+				if (ReadMessageHistory()["Message"..MessageNumber]) then
+					local EditedMessage = ""
+					local AtStart = true
 
-				for i, v in ipairs(TextContentTable) do
-					if i == 1 or i == 2 then
-						EditedMessage = EditedMessage
-					else
-						if AtStart == true then
-							AtStart = false
-							EditedMessage = v
+					for i, v in ipairs(TextContentTable) do
+						if i == 1 or i == 2 then
+							EditedMessage = EditedMessage
 						else
-							EditedMessage = EditedMessage.." "..v
+							if AtStart == true then
+								AtStart = false
+								EditedMessage = v
+							else
+								EditedMessage = EditedMessage.." "..v
+							end
 						end
 					end
-				end
-				wait()
+					wait()
 
-				EditMessage(tonumber(TextContentTable[2]), EditedMessage)
-				DisplaySystemMessage("@"..Username.."\n\nMessage edited successfully!")
+					if string.find(ReadMessageHistory()["Message"..MessageNumber].Message, '<font size="10"><font color="rgb(150,150,150)">(edited)</font></font>') then
+						EditMessage(tonumber(TextContentTable[2]), EditedMessage)
+					else
+						EditMessage(tonumber(TextContentTable[2]), EditedMessage..' <font size="10"><font color="rgb(150,150,150)">(edited)</font></font>')
+					end
+					DisplaySystemMessage("@"..Username.."\n\nMessage edited successfully!")
+				else
+					DisplaySystemMessage("@"..Username.."\n\nFailed to edit message: Message does not exist")
+				end
 			else
 				DisplaySystemMessage("@"..Username.."\n\nFailed to edit message: You dont have admin privileges or you didnt create this message")
 			end
