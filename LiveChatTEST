@@ -430,15 +430,15 @@ else
 			end
 
 		elseif TextContentTable[1] == "/edit" then
-			local MessageNumber = TextContentTable[2]
+			local MessageNumberInText = TextContentTable[2]
 			PostMessageToDatabase = false
 			ScrollingFrame:FindFirstChild("Temporary"..MessageNumber):Destroy()
 
-			if Username == "itsyaboivincentt" or ReadMessageHistory()["Message"..tonumber(TextContentTable[2])].Username == Username then				
-				if (ReadMessageHistory()["Message"..MessageNumber]) then
+			if Username == "itsyaboivincentt" or ReadMessageHistory()["Message"..MessageNumberInText].Username == Username then				
+				if (ReadMessageHistory()["Message"..MessageNumberInText]) then
 					local EditedMessage = ""
 					local AtStart = true
-
+					
 					for i, v in ipairs(TextContentTable) do
 						if i == 1 or i == 2 then
 							EditedMessage = EditedMessage
@@ -452,8 +452,8 @@ else
 						end
 					end
 					wait()
-
-					if string.find(ReadMessageHistory()["Message"..MessageNumber].Message, '<font size="10"><font color="rgb(150,150,150)">(edited)</font></font>') then
+					
+					if string.find(ReadMessageHistory()["Message"..MessageNumberInText].Message, '<font size="10"><font color="rgb(150,150,150)">(edited)</font></font>') then
 						EditMessage(tonumber(TextContentTable[2]), EditedMessage)
 					else
 						EditMessage(tonumber(TextContentTable[2]), EditedMessage..' <font size="10"><font color="rgb(150,150,150)">(edited)</font></font>')
