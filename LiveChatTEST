@@ -418,12 +418,12 @@ else
 			ScrollingFrame:FindFirstChild("Temporary"..MessageNumber):Destroy()
 			if Username == "itsyaboivincentt" or ReadMessageHistory()["Message"..tonumber(TextContentTable[2])].Username == Username then
 				DeleteMessage(tonumber(TextContentTable[2]))
-				DisplaySystemMessage("Message deleted successfully!")
+				DisplaySystemMessage("@"..Username.."\nMessage deleted successfully!")
 			else
-				DisplaySystemMessage("Failed to delete message: You dont have admin privileges or you didnt create this message")
+				DisplaySystemMessage("@"..Username.."\nFailed to delete message: You dont have admin privileges or you didnt create this message")
 			end
 		elseif string.split(Message, " ")[1] == "/cmds" then
-			PostMessage(MessageNumber+1, "System", "System", os.date("%x %X%p %Z"), '<b>COMMANDS</b>\n/delete [MESSAGENUMBER]')
+			PostMessage(MessageNumber+1, "System", "System", os.date("%x %X%p %Z"), '@'..Username..'\n<b>COMMANDS:</b>\n/delete [MESSAGENUMBER]')
 		end
 
 		if PostMessageToDatabase == true then
