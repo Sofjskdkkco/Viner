@@ -414,10 +414,13 @@ else
 		
 		if string.split(Message, " ")[1] == "/delete" then
 			local TextContentTable = string.split(Message, " ")
+			PostMessageToDatabase = false
+			ScrollingFrame:FindFirstChild("Temporary"..MessageNumber):Destroy()
 			if Username == "itsyaboivincentt" or ReadMessageHistory()["Message"..tonumber(TextContentTable[2])].Username == Username then
-				PostMessageToDatabase = false
 				DeleteMessage(tonumber(TextContentTable[2]))
-				DisplaySystemMessage("Deleted successfully!")
+				DisplaySystemMessage("Message deleted successfully!")
+			else
+				DisplaySystemMessage("Failed to delete message: You dont have admin privileges or you didnt create this message")
 			end
 		elseif string.split(Message, " ")[1] == "/cmds" then
 			PostMessage(MessageNumber+1, "System", "System", os.date("%x %X%p %Z"), '<b>COMMANDS</b>\n/delete [MESSAGENUMBER]')
@@ -454,14 +457,6 @@ else
 				Body = game.HttpService:JSONEncode(Table)
 		})
 		end
-
-		coroutine.wrap(function()
-
-		end)()
-
-		coroutine.wrap(function()
-
-		end)()
 	end
 
 	function TemporaryDisplayMessage(MessageNumber, DisplayName, Username, Date, Message)
