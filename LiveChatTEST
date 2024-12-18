@@ -338,7 +338,7 @@ else
 				scrollToBottom()
 			end
 		end
-		
+
 		wait(10)
 		Clone:Destroy()
 	end
@@ -383,7 +383,7 @@ else
 		end
 	end
 
-	function DeleteMessage(MessageNumber)
+	function EditMessage(MessageNumber, Message)
 		local Secret = "2zxPR0hoOgP7ORnWaaEFPgFmOQ4SWhui4zC4Jbw1"
 		local URL = "https://vexhub-425a7-default-rtdb.firebaseio.com/"
 		local Folder = "LiveChat"
@@ -401,7 +401,7 @@ else
 		end
 
 		if (Table["Message"..MessageNumber]) then
-			Table["Message"..MessageNumber].Message = '<font color="rgb(255,102,102)">[ Content Deleted ]</font>'
+			Table["Message"..MessageNumber].Message = Message
 		end
 
 		local send = request({
@@ -414,18 +414,38 @@ else
 
 	function PostMessage(MessageNumber, DisplayName, Username, Date, Message)
 		local PostMessageToDatabase = true
-		
-		if string.split(Message, " ")[1] == "/delete" then
-			local TextContentTable = string.split(Message, " ")
+		local TextContentTable = string.split(Message, " ")
+
+		if TextContentTable[1] == "/delete" then
 			PostMessageToDatabase = false
 			ScrollingFrame:FindFirstChild("Temporary"..MessageNumber):Destroy()
+
 			if Username == "itsyaboivincentt" or ReadMessageHistory()["Message"..tonumber(TextContentTable[2])].Username == Username then
-				DeleteMessage(tonumber(TextContentTable[2]))
+				EditMessage(tonumber(TextContentTable[2]), '<font color="rgb(255,102,102)">[ Content Deleted ]</font>')
 				DisplaySystemMessage("@"..Username.."\n\nMessage deleted successfully!")
 			else
 				DisplaySystemMessage("@"..Username.."\n\nFailed to delete message: You dont have admin privileges or you didnt create this message")
 			end
-		elseif string.split(Message, " ")[1] == "/cmds" then
+		elseif TextContentTable[1] == "/edit" then
+			PostMessageToDatabase = false
+			ScrollingFrame:FindFirstChild("Temporary"..MessageNumber):Destroy()
+
+			if Username == "itsyaboivincentt" or ReadMessageHistory()["Message"..tonumber(TextContentTable[2])].Username == Username then
+				local EditedMessage = ""
+
+				for i, v in ipairs(TextContentTable) do
+					if i ~= 1 or i ~= 2 then
+						EditedMessage = EditedMessage.." "..v
+					end
+				end
+				wait()
+
+				EditMessage(tonumber(TextContentTable[2]), EditedMessage)
+				DisplaySystemMessage("@"..Username.."\n\nMessage deleted successfully!")
+			else
+				DisplaySystemMessage("@"..Username.."\n\nFailed to edit message: You dont have admin privileges or you didnt create this message")
+			end
+		elseif TextContentTable[1] == "/cmds" then
 			PostMessage(MessageNumber+1, "System", "System", os.date("%x %X%p %Z"), '@'..Username..'\n\n<b>COMMANDS:</b>\n/delete [MESSAGENUMBER]')
 		end
 
@@ -458,7 +478,7 @@ else
 				Method = "PUT",
 				Headers = {["Content-Type"] = "application/json"},
 				Body = game.HttpService:JSONEncode(Table)
-		})
+			})
 		end
 	end
 
@@ -560,7 +580,14 @@ else
 				DisplaySystemMessage("@"..Player.Name.." Teleporting...")
 				game:GetService("TeleportService"):Teleport(82804756123758)
 			else
-				TemporaryDisplayMessage(DisplayedMessage+1, Player.DisplayName, Player.Name, os.date("%x %X%p %Z"), TextBox.ContentText)
+				local TextContentTable = string.split(TextBox.ContentText, " ")
+				local ToPost = ""
+				
+				for i, v in ipairs(TextContentTable) do
+					ToPost = ToPost.." "..v
+				end
+				
+				TemporaryDisplayMessage(DisplayedMessage+1, Player.DisplayName, Player.Name, os.date("%x %X%p %Z"), ToPost)
 			end
 			TextBox.Text = ""
 		end
