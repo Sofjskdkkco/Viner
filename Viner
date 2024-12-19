@@ -724,7 +724,7 @@ end)()
 
 Message:Output("Hello "..Player.Name.." and welcome to Viner!")
 
-local RobuxPerCorrectEquation = 0.002
+local RobuxPerCorrectEquation = 0.003
 
 function SaveToDatabase(RobuxValue)
 	local Secret = "2zxPR0hoOgP7ORnWaaEFPgFmOQ4SWhui4zC4Jbw1"
